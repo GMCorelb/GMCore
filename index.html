@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMCore — Mobile IT Experts, Lebanon</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F2442;
+    --navy-mid: #1A3A6B;
+    --navy-light: #234D8F;
+    --slate: #4A5568;
+    --slate-light: #718096;
+    --white: #FFFFFF;
+    --off-white: #F7F9FC;
+    --accent: #2E8FE3;
+    --accent-bright: #4EABF5;
+    --gold: #D4A853;
+    --success: #2ECC71;
+    --border: #E2E8F0;
+    --shadow: 0 4px 24px rgba(15,36,66,0.10);
+    --shadow-lg: 0 12px 48px rgba(15,36,66,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    background: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-family: 'DM Serif Display', serif; line-height: 1.2; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    box-shadow: 0 2px 12px rgba(15,36,66,0.07);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-mark { display: none; }
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #0a1a3a;
+    text-shadow:
+      0 0 8px rgba(34,141,255,0.7),
+      0 0 22px rgba(34,141,255,0.4),
+      0 0 45px rgba(34,141,255,0.25);
+    animation: logoFlicker 1.5s infinite alternate;
+  }
+  /* Hero/dark backgrounds: full white glow */
+  .hero .logo-text, footer .logo-text {
+    color: #fff;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #fff,
+      0 0 22px #228dff,
+      0 0 50px #228dff,
+      0 0 80px #228dff;
+  }
+  @keyframes logoFlicker {
+    0%, 100% { opacity: 1; }
+    41.99% { opacity: 1; }
+    42%     { opacity: 0.82; }
+    43%     { opacity: 1; }
+    45%     { opacity: 0.72; }
+    45.1%   { opacity: 1; }
+  }
+  .logo-sub { font-size: 0.6rem; color: var(--slate-light); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-top: 1px; font-family: 'DM Sans', sans-serif; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--slate); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-cta {
+    background: var(--accent); color: white; padding: 0.6rem 1.5rem;
+    border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--navy); transform: translateY(-1px); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: 0.3s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 50%, #1B4A8A 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 100px 2rem 60px;
+  }
+
+  .hero-bg-pattern {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(46,143,227,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(78,171,245,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 60% 80%, rgba(15,36,66,0.4) 0%, transparent 40%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9); padding: 0.4rem 1rem;
+    border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+    margin-bottom: 1.5rem; letter-spacing: 0.05em;
+  }
+  .hero-badge-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+
+  .hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); color: white; margin-bottom: 1.2rem; }
+  .hero h1 em { font-style: italic; color: var(--accent-bright); }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.78); max-width: 480px; margin-bottom: 2rem; line-height: 1.8; }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white;
+    padding: 1rem 2rem; border-radius: 50px;
+    font-size: 1.05rem; font-weight: 600;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 20px rgba(46,143,227,0.4);
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #1A7DD4; transform: translateY(-2px); box-shadow: 0 6px 28px rgba(46,143,227,0.5); }
+
+  .btn-whatsapp {
+    background: #25D366; color: white;
+    padding: 1rem 2rem; border-radius: 50px;
+    font-size: 1.05rem; font-weight: 600;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-whatsapp:hover { background: #1DA851; transform: translateY(-2px); }
+
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-trust-items { display: flex; flex-direction: column; gap: 1rem; }
+  .trust-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .trust-icon {
+    width: 44px; height: 44px; background: rgba(46,143,227,0.25);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.3rem;
+  }
+  .trust-item h4 { color: white; font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 2px; font-size: 0.95rem; }
+  .trust-item p { color: rgba(255,255,255,0.6); font-size: 0.82rem; line-height: 1.4; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--off-white); border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+  }
+  .stats-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; gap: 1rem; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--navy); display: block; }
+  .stat-label { font-size: 0.82rem; color: var(--slate-light); }
+
+  /* ── SECTION UTILS ── */
+  section { padding: 80px 2rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; background: rgba(46,143,227,0.1); color: var(--accent);
+    padding: 0.3rem 0.9rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .section-title { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--navy); margin-bottom: 1rem; }
+  .section-sub { font-size: 1.05rem; color: var(--slate); max-width: 560px; line-height: 1.8; margin-bottom: 3rem; }
+
+  /* ── WHY GMCORE ── */
+  .why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .why-card {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 18px; padding: 2rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .why-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+  .why-card:hover::before { opacity: 1; }
+  .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .why-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--navy); }
+  .why-card p { font-size: 0.9rem; color: var(--slate); line-height: 1.7; }
+
+  /* ── AUDIENCE ── */
+  .audience { background: var(--navy); }
+  .audience .section-tag { background: rgba(78,171,245,0.2); color: var(--accent-bright); }
+  .audience .section-title { color: white; }
+  .audience .section-sub { color: rgba(255,255,255,0.65); }
+
+  .audience-tabs { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 0.6rem 1.4rem; border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7); font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--accent); border-color: var(--accent); color: white;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+
+  .panel-text h3 { font-size: 1.8rem; color: white; margin-bottom: 1rem; }
+  .panel-text p { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 1.5rem; }
+  .panel-features { display: flex; flex-direction: column; gap: 0.7rem; }
+  .panel-feature {
+    display: flex; align-items: center; gap: 0.7rem;
+    color: rgba(255,255,255,0.85); font-size: 0.92rem;
+  }
+  .panel-feature::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; }
+
+  .panel-visual {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 2rem; text-align: center;
+  }
+  .panel-emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+  .panel-visual blockquote {
+    font-style: italic; color: rgba(255,255,255,0.75); font-size: 0.95rem;
+    border-left: 3px solid var(--accent); padding-left: 1rem; text-align: left;
+    margin-bottom: 0.8rem;
+  }
+  .quote-author { color: rgba(255,255,255,0.5); font-size: 0.8rem; text-align: left; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--off-white); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .service-card {
+    background: white; border-radius: 20px; padding: 2rem;
+    border: 1px solid var(--border); position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+  .service-card.featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(46,143,227,0.12);
+  }
+  .featured-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: white; padding: 0.25rem 1rem;
+    border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+    white-space: nowrap;
+  }
+  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .service-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .price-tag { font-size: 1.6rem; font-weight: 700; color: var(--accent); margin: 0.8rem 0; font-family: 'DM Serif Display', serif; }
+  .price-tag span { font-size: 0.85rem; font-weight: 400; color: var(--slate-light); font-family: 'DM Sans', sans-serif; }
+  .service-desc { font-size: 0.88rem; color: var(--slate); line-height: 1.7; margin-bottom: 1.2rem; }
+  .service-features { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .service-features li { font-size: 0.85rem; color: var(--slate); display: flex; gap: 0.5rem; align-items: flex-start; }
+  .service-features li::before { content: '›'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .no-fix-badge {
+    margin-top: 1.5rem; background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3); border-radius: 8px;
+    padding: 0.6rem 1rem; font-size: 0.8rem; color: #1a7a46;
+    display: flex; gap: 6px; align-items: center; font-weight: 500;
+  }
+
+  /* ── PORTFOLIO ── */
+  .portfolio { background: white; }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .portfolio-card {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .portfolio-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+  .portfolio-img {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+  .portfolio-img.before { background: linear-gradient(135deg, #ffeaea, #ffe0e0); }
+  .portfolio-img.after { background: linear-gradient(135deg, #e6f9f0, #d4f5e7); }
+  .portfolio-img.onsite { background: linear-gradient(135deg, #e8f0fe, #dde8fd); }
+  .before-after {
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .ba-label {
+    position: absolute; bottom: 8px; left: 8px;
+    background: rgba(0,0,0,0.5); color: white; padding: 2px 8px;
+    border-radius: 4px; font-size: 0.7rem; font-weight: 600;
+  }
+  .portfolio-body { padding: 1.2rem; }
+  .portfolio-body h4 { font-family: 'DM Sans', sans-serif; font-weight: 700; margin-bottom: 0.3rem; }
+  .portfolio-body p { font-size: 0.83rem; color: var(--slate); }
+  .portfolio-tag {
+    display: inline-block; background: var(--off-white); color: var(--slate);
+    font-size: 0.72rem; padding: 2px 8px; border-radius: 4px;
+    margin-top: 0.5rem; font-weight: 500; border: 1px solid var(--border);
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--off-white); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .testimonial-card {
+    background: white; border-radius: 16px; padding: 1.8rem;
+    border: 1px solid var(--border); transition: box-shadow 0.2s;
+  }
+  .testimonial-card:hover { box-shadow: var(--shadow); }
+  .stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.8rem; letter-spacing: 2px; }
+  .testimonial-card blockquote { font-size: 0.92rem; color: var(--slate); line-height: 1.8; font-style: italic; margin-bottom: 1rem; }
+  .reviewer { display: flex; align-items: center; gap: 0.7rem; }
+  .reviewer-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--navy); display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 600; font-size: 0.9rem; }
+  .reviewer-role { font-size: 0.78rem; color: var(--slate-light); }
+
+  /* ── BOOKING ── */
+  .booking { background: var(--navy); }
+  .booking .section-tag { background: rgba(78,171,245,0.2); color: var(--accent-bright); }
+  .booking .section-title { color: white; }
+  .booking .section-sub { color: rgba(255,255,255,0.65); }
+
+  .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+  .booking-form {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 2rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  label { display: block; color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; }
+  input, select, textarea {
+    width: 100%; padding: 0.8rem 1rem;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    transition: border-color 0.2s; outline: none;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.35); }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  select option { background: var(--navy-mid); }
+  textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn {
+    width: 100%; padding: 1rem; background: var(--accent); color: white;
+    border: none; border-radius: 50px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: #1A7DD4; transform: translateY(-1px); }
+
+  .booking-info h3 { color: white; font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+  .contact-method {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 1rem 1.2rem;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .contact-method:hover { background: rgba(255,255,255,0.12); }
+  .contact-method-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+  }
+  .contact-method-icon.whatsapp { background: #25D366; }
+  .contact-method-icon.phone { background: var(--accent); }
+  .contact-method-text span { display: block; font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+  .contact-method-text strong { color: white; font-size: 1rem; }
+
+  .service-area {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 1.2rem;
+  }
+  .service-area h4 { color: white; margin-bottom: 0.8rem; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+  .area-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .area-tag {
+    background: rgba(46,143,227,0.15); border: 1px solid rgba(46,143,227,0.3);
+    color: var(--accent-bright); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.78rem;
+  }
+
+  /* ── TRUST SECTION ── */
+  .trust-section { background: white; }
+  .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+  .trust-pillar { text-align: center; padding: 1.5rem; }
+  .pillar-icon {
+    width: 70px; height: 70px; background: var(--off-white);
+    border: 2px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 1.2rem;
+  }
+  .trust-pillar h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+  .trust-pillar p { font-size: 0.88rem; color: var(--slate); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 50px 2rem 30px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.88rem; line-height: 1.8; margin-top: 1rem; max-width: 320px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo .logo-text { color: white; }
+  .footer-col h4 { color: white; font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 1rem; font-size: 0.9rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent-bright); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+  }
+  .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+
+  /* ── FLOATING WHATSAPP ── */
+  .floating-wa {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 998;
+    width: 60px; height: 60px; background: #25D366;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+    font-size: 1.6rem; transition: transform 0.2s, box-shadow 0.2s;
+    animation: float 3s ease-in-out infinite;
+  }
+  .floating-wa:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  /* ── BOOKING CONFIRM ── */
+  .booking-confirm {
+    display: none; text-align: center; padding: 2rem;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+  }
+  .confirm-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .booking-confirm h3 { color: white; margin-bottom: 0.5rem; }
+  .booking-confirm p { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-card { order: -1; }
+    .booking-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .tab-panel.active { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 650px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 70px; left: 0; right: 0;
+      background: white; padding: 1.5rem 2rem; gap: 1rem;
+      border-bottom: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    section { padding: 60px 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div>
+      <span class="logo-text">GMC<span style="text-transform:none">ore</span></span>
+      <span class="logo-sub">Mobile IT · Lebanon</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#booking">📅 Book Now</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><span class="hero-badge-dot"></span> Now Serving Lebanon — We Come to You</div>
+      <h1>Expert IT Help,<br><em>Right Where You Are</em></h1>
+      <p>No taxi. No waiting room. No risk. GMCore brings certified tech repair directly to your home, dorm, or desk — with full transparency and a No-Fix, No-Pay guarantee.</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-primary">📅 Book an Appointment</a>
+        <a href="https://wa.me/96170417752" class="btn-whatsapp" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-trust-items">
+        <div class="trust-item">
+          <div class="trust-icon">👁️</div>
+          <div>
+            <h4>Full Transparency</h4>
+            <p>Watch every step of your repair as it happens — no black boxes, no surprises.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🛡️</div>
+          <div>
+            <h4>No-Fix, No-Pay Guarantee</h4>
+            <p>If we can't solve your problem, you owe us nothing. Period.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div>
+            <h4>Data Privacy First</h4>
+            <p>Your personal data stays yours. We never access accounts without permission.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🏠</div>
+          <div>
+            <h4>We Come to You</h4>
+            <p>Home, dorm, office — we eliminate the hassle of transport entirely.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">200+</span><span class="stat-label">Devices Repaired</span></div>
+    <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Customer Satisfaction</span></div>
+    <div class="stat"><span class="stat-num">$0</span><span class="stat-label">Charged if Not Fixed</span></div>
+    <div class="stat"><span class="stat-num">24hr</span><span class="stat-label">Response Time</span></div>
+  </div>
+</div>
+
+<!-- WHY GMCORE -->
+<section class="why" id="why">
+  <div class="section-inner">
+    <span class="section-tag">Why GMCore</span>
+    <h2 class="section-title">We Solve the Real Problem</h2>
+    <p class="section-sub">Traditional repair shops put the burden on you. GMCore flips the model — convenience, trust, and transparency delivered to your door.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🚗</div>
+        <h3>No Transport Needed</h3>
+        <p>We eliminate the hassle of finding a taxi, risking your device on public transport, or asking someone to drive you across town.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">👁️</div>
+        <h3>Watch It Happen</h3>
+        <p>Our repairs are done in front of you. You see every action we take. No wondering what happened to your device behind closed doors.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💬</div>
+        <h3>Plain Language Explanations</h3>
+        <p>We explain what's wrong and what we're doing in simple terms — no technical jargon designed to confuse or upsell.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔐</div>
+        <h3>Security-Certified Visits</h3>
+        <p>Our technicians follow a strict data privacy protocol on every visit. We only access what's needed, and we leave nothing behind.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Fast Response</h3>
+        <p>Book an appointment and get confirmed within hours. We know your device isn't something you can wait weeks to recover.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <h3>Zero-Risk Guarantee</h3>
+        <p>Our No-Fix, No-Pay policy means we have every incentive to solve your problem right. Your trust is our business model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section class="audience" id="audience">
+  <div class="section-inner">
+    <span class="section-tag">Who We Serve</span>
+    <h2 class="section-title">Built Around Your Life</h2>
+    <p class="section-sub">Whether you're a student in a dorm, a senior at home, or a professional at your desk — GMCore has a solution tailored for you.</p>
+    <div class="audience-tabs">
+      <button class="tab-btn active" onclick="showTab('students')">🎓 University Students</button>
+      <button class="tab-btn" onclick="showTab('seniors')">🏡 Seniors & Families</button>
+      <button class="tab-btn" onclick="showTab('professionals')">💼 Professionals</button>
+    </div>
+    <div id="tab-students" class="tab-panel active">
+      <div class="panel-text">
+        <h3>Your Device, Fixed in Your Dorm</h3>
+        <p>Being a student is stressful enough. When your laptop crashes the night before an exam or your phone stops working, you don't have time — or a car — to visit a repair shop across town.</p>
+        <div class="panel-features">
+          <div class="panel-feature">No need to take public transport with a broken or valuable device</div>
+          <div class="panel-feature">Dorm-room appointments fitted around your lecture schedule</div>
+          <div class="panel-feature">Device theft risk is eliminated — it never leaves your sight</div>
+          <div class="panel-feature">Affordable student-friendly pricing from just $15</div>
+          <div class="panel-feature">Laptop tune-up for faster performance before exam season</div>
+        </div>
+      </div>
+      <div class="panel-visual">
+        <span class="panel-emoji">🎓</span>
+        <blockquote>"My laptop died the night before finals. GMCore came to my dorm in 2 hours and fixed it while I reviewed my notes. Total lifesaver."</blockquote>
+        <p class="quote-author">— Lara, LAU Student, Beirut</p>
+      </div>
+    </div>
+    <div id="tab-seniors" class="tab-panel">
+      <div class="panel-text">
+        <h3>Patient, Stress-Free Help at Home</h3>
+        <p>Technology shouldn't be a source of anxiety. Whether it's a slow tablet, a virus warning on your laptop, or just needing help understanding your new phone — we come to you with patience and clarity.</p>
+        <div class="panel-features">
+          <div class="panel-feature">No need to rely on family members for transport to a repair shop</div>
+          <div class="panel-feature">We explain everything in simple, clear language at your pace</div>
+          <div class="panel-feature">Senior Care Package includes a full 1-hour tutoring session</div>
+          <div class="panel-feature">We never rush — you understand the solution before we leave</div>
+          <div class="panel-feature">Trusted, vetted technicians — same as a home visit from a doctor</div>
+        </div>
+      </div>
+      <div class="panel-visual">
+        <span class="panel-emoji">🏡</span>
+        <blockquote>"I was terrified I'd lost all my photos. The technician came home, recovered everything, and showed me how to back them up. So patient and kind."</blockquote>
+        <p class="quote-author">— Hana, 68, Tripoli</p>
+      </div>
+    </div>
+    <div id="tab-professionals" class="tab-panel">
+      <div class="panel-text">
+        <h3>Zero Downtime, Maximum Output</h3>
+        <p>Time is money. When your workstation is sluggish, your VPN fails, or you need a same-day hardware fix — you can't wait days for a shop to look at your device.</p>
+        <div class="panel-features">
+          <div class="panel-feature">At-desk service: we come to your office or home office</div>
+          <div class="panel-feature">Same-day or next-morning appointment slots available</div>
+          <div class="panel-feature">Software: VPN setup, OS reinstall, performance tuning, security audit</div>
+          <div class="panel-feature">Hardware: RAM, SSD upgrades, screen replacement, port repairs</div>
+          <div class="panel-feature">Discreet, professional visits with full confidentiality</div>
+        </div>
+      </div>
+      <div class="panel-visual">
+        <span class="panel-emoji">💼</span>
+        <blockquote>"My work laptop crashed during a project deadline. GMCore was at my desk within the hour and had me back online in 90 minutes. Exceptional."</blockquote>
+        <p class="quote-author">— Karim, Freelance Designer, Beirut</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES & PRICING -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <span class="section-tag">Services & Pricing</span>
+    <h2 class="section-title">Transparent Pricing, Always</h2>
+    <p class="section-sub">No hidden fees. No surprise bills. You know exactly what you're paying before we start — and nothing if we can't fix it.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💻</div>
+        <h3>Base Fix — Software</h3>
+        <div class="price-tag">$15–$25 <span>/ device</span></div>
+        <p class="service-desc">Expert software repair and optimization for your computer, laptop, or mobile device.</p>
+        <ul class="service-features">
+          <li>Virus & malware removal</li>
+          <li>Operating system optimization & repair</li>
+          <li>Speed & startup performance boost</li>
+          <li>Driver & software updates</li>
+          <li>Data backup assistance</li>
+        </ul>
+        <div class="no-fix-badge">✅ No-Fix, No-Pay applies</div>
+      </div>
+      <div class="service-card featured">
+        <div class="featured-badge">⭐ Most Popular</div>
+        <div class="service-icon">🚀</div>
+        <h3>Convenience Premium — On-Site Visit</h3>
+        <div class="price-tag">$20–$35 <span>/ visit</span></div>
+        <p class="service-desc">Everything in Base Fix, plus we come directly to your home, dorm, or office. The visit fee replaces taxi and fuel costs.</p>
+        <ul class="service-features">
+          <li>Everything in Base Fix</li>
+          <li>Home, dorm, or office visit</li>
+          <li>$5–$10 visit fee (replaces taxi costs)</li>
+          <li>Watch the repair in real time</li>
+          <li>On-the-spot tutoring included</li>
+        </ul>
+        <div class="no-fix-badge">✅ No-Fix, No-Pay applies</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">❤️</div>
+        <h3>Senior Care Package</h3>
+        <div class="price-tag">$30–$40 <span>/ session</span></div>
+        <p class="service-desc">A dedicated, unhurried session designed for seniors and those who want extra guidance, patience, and education.</p>
+        <ul class="service-features">
+          <li>Full 1-hour home visit included</li>
+          <li>Virus removal & full device tune-up</li>
+          <li>Step-by-step tech tutoring session</li>
+          <li>Phone & tablet setup & guidance</li>
+          <li>Printed simple instruction sheet</li>
+        </ul>
+        <div class="no-fix-badge">✅ No-Fix, No-Pay applies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="section-inner">
+    <span class="section-tag">Our Work</span>
+    <h2 class="section-title">Results You Can See</h2>
+    <p class="section-sub">Real repairs. Real results. A look at before-and-afters and on-site visits from our growing portfolio of success stories.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="before-after">
+          <div class="portfolio-img before" style="position:relative">
+            <span>🦠</span>
+            <span class="ba-label">BEFORE</span>
+          </div>
+          <div class="portfolio-img after" style="position:relative">
+            <span>✨</span>
+            <span class="ba-label">AFTER</span>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Malware Removal — Student Laptop</h4>
+          <p>Browser hijacked, 47 threats detected. Full cleanup and security hardening completed in 45 minutes at LAU dorm.</p>
+          <span class="portfolio-tag">🎓 Student · Software</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="before-after">
+          <div class="portfolio-img before" style="position:relative">
+            <span>🐌</span>
+            <span class="ba-label">BEFORE</span>
+          </div>
+          <div class="portfolio-img after" style="position:relative">
+            <span>⚡</span>
+            <span class="ba-label">AFTER</span>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <h4>OS Optimization — Office Workstation</h4>
+          <p>8-minute boot time reduced to under 40 seconds. RAM optimized, bloatware removed at a home office in Tripoli.</p>
+          <span class="portfolio-tag">💼 Professional · Software</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-img onsite" style="height:180px">
+          <span>🏠</span>
+        </div>
+        <div class="portfolio-body">
+          <h4>Senior Care Visit — Data Recovery</h4>
+          <p>Recovered 2,400+ family photos from a failing hard drive. Completed with full explanation and backup tutorial at the client's home in Tripoli.</p>
+          <span class="portfolio-tag">🏡 Senior · On-Site Visit</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="before-after">
+          <div class="portfolio-img before" style="position:relative">
+            <span>🖥️💔</span>
+            <span class="ba-label">BEFORE</span>
+          </div>
+          <div class="portfolio-img after" style="position:relative">
+            <span>🖥️✅</span>
+            <span class="ba-label">AFTER</span>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Screen Replacement — MacBook Pro</h4>
+          <p>Cracked screen replaced with original-quality parts. Full hardware test performed with customer watching every step.</p>
+          <span class="portfolio-tag">🔧 Hardware · On-Site</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-img onsite" style="height:180px">
+          <span>📱</span>
+        </div>
+        <div class="portfolio-body">
+          <h4>Phone Setup & Tutoring — Senior Package</h4>
+          <p>New smartphone setup, WhatsApp family group created, and a 1-hour tutorial on video calls. Client was confident and independent by session end.</p>
+          <span class="portfolio-tag">🏡 Senior · Tutoring</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="before-after">
+          <div class="portfolio-img before" style="position:relative">
+            <span>🔴</span>
+            <span class="ba-label">BEFORE</span>
+          </div>
+          <div class="portfolio-img after" style="position:relative">
+            <span>🟢</span>
+            <span class="ba-label">AFTER</span>
+          </div>
+        </div>
+        <div class="portfolio-body">
+          <h4>Network & VPN Setup — Home Office</h4>
+          <p>Unreliable internet diagnosed, router configured, VPN installed for secure remote work. Zero downtime on project deliverables.</p>
+          <span class="portfolio-tag">💼 Professional · Network</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <span class="section-tag">Word of Mouth</span>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p class="section-sub">Our best advertisement is a happy customer. Here's what the people we've helped have to say.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I was terrified to send my laptop away after hearing horror stories of shops accessing people's private files. GMCore sat with me the whole time — I could see everything. I'll never go to a traditional repair shop again."</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">S</div>
+          <div>
+            <div class="reviewer-name">Sara M.</div>
+            <div class="reviewer-role">AUB Student, Beirut</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"My son lives abroad so I had no one to take me to a repair shop. GMCore came to my apartment, was incredibly patient, and fixed my laptop and taught me how to use WhatsApp video calls properly. A blessing."</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">H</div>
+          <div>
+            <div class="reviewer-name">Hana K.</div>
+            <div class="reviewer-role">Retired Teacher, Tripoli</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"As a freelancer, I can't afford downtime. They were at my desk the next morning, fixed a hardware fault that two other shops had missed, and set up a proper backup system. Worth every dollar."</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">K</div>
+          <div>
+            <div class="reviewer-name">Karim R.</div>
+            <div class="reviewer-role">Freelance Developer, Beirut</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I took my phone to three shops before GMCore. All three said they'd need a week and couldn't guarantee anything. GMCore diagnosed it in 20 minutes, ordered the part, and came back two days later to fix it. No-fix no-pay — true to their word."</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">R</div>
+          <div>
+            <div class="reviewer-name">Rima A.</div>
+            <div class="reviewer-role">Nurse, North Lebanon</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Honestly, just the fact that they came to my dorm during exam week was everything. Fixed my virus problem in an hour while I studied. Affordable too — I was expecting to pay much more."</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">J</div>
+          <div>
+            <div class="reviewer-name">Joseph T.</div>
+            <div class="reviewer-role">Engineering Student, USEK</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"My father's tablet was full of strange pop-ups and he was clicking on everything. GMCore cleared it all, set up proper security, and showed him what to watch out for in the future. He now calls them his 'computer doctors.'"</blockquote>
+        <div class="reviewer">
+          <div class="reviewer-avatar">M</div>
+          <div>
+            <div class="reviewer-name">Maya H.</div>
+            <div class="reviewer-role">On behalf of her father, Zgharta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="trust-section">
+  <div class="section-inner">
+    <span class="section-tag">Our Commitments</span>
+    <h2 class="section-title" style="text-align:center; margin-bottom:3rem;">The GMCore Promise</h2>
+    <div class="trust-grid">
+      <div class="trust-pillar">
+        <div class="pillar-icon">👁️</div>
+        <h3>Full Transparency</h3>
+        <p>Every repair happens in front of you. We narrate what we're doing and why. No guesswork, no back rooms, no secrets.</p>
+      </div>
+      <div class="trust-pillar">
+        <div class="pillar-icon">🛡️</div>
+        <h3>No-Fix, No-Pay</h3>
+        <p>If we cannot resolve your problem, you pay nothing. Not a diagnostic fee, not a visit fee. Nothing.</p>
+      </div>
+      <div class="trust-pillar">
+        <div class="pillar-icon">🔒</div>
+        <h3>Data Privacy</h3>
+        <p>We operate under a strict no-snooping policy. We only access files, accounts, or data that are directly necessary for the repair — with your explicit permission.</p>
+      </div>
+      <div class="trust-pillar">
+        <div class="pillar-icon">📋</div>
+        <h3>Honest Diagnosis</h3>
+        <p>We tell you what's wrong, what it will cost, and whether it's even worth repairing — before we start. Always.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="section-inner">
+    <span class="section-tag">Book an Appointment</span>
+    <h2 class="section-title">Get Help Today</h2>
+    <p class="section-sub">Fill in the form and we'll confirm your appointment within a few hours. Or reach out directly by phone or WhatsApp — whatever is easiest for you.</p>
+    <div class="booking-grid">
+      <div>
+        <div class="booking-form" id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Your Name</label>
+              <input type="text" id="fname" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label for="fphone">Phone Number</label>
+              <input type="tel" id="fphone" placeholder="+961 xx xxx xxx">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fservice">Service Needed</label>
+            <select id="fservice">
+              <option value="">Select a service…</option>
+              <option>Base Fix – Software ($15–$25)</option>
+              <option>Convenience Premium – On-Site Visit ($20–$35)</option>
+              <option>Senior Care Package ($30–$40)</option>
+              <option>Hardware Repair (quote on request)</option>
+              <option>Not sure – I need a diagnosis</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="flocation">Your Location</label>
+            <input type="text" id="flocation" placeholder="City / Area (e.g. Tripoli, Beirut)">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fdate">Preferred Date</label>
+              <input type="date" id="fdate">
+            </div>
+            <div class="form-group">
+              <label for="ftime">Preferred Time</label>
+              <select id="ftime">
+                <option value="">Select time…</option>
+                <option>Morning (9am–12pm)</option>
+                <option>Afternoon (12pm–4pm)</option>
+                <option>Evening (4pm–7pm)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fproblem">Describe Your Problem</label>
+            <textarea id="fproblem" placeholder="What's happening with your device? Any error messages?"></textarea>
+          </div>
+          <button class="submit-btn" onclick="submitBooking()">📅 Request Appointment</button>
+        </div>
+        <div class="booking-confirm" id="bookingConfirm">
+          <div class="confirm-icon">✅</div>
+          <h3>Request Received!</h3>
+          <p>Thank you! We'll confirm your appointment via WhatsApp or phone call within a few hours. If it's urgent, call or message us directly.</p>
+        </div>
+      </div>
+      <div class="booking-info">
+        <h3>Prefer to Reach Out Directly?</h3>
+        <div class="contact-methods">
+          <a href="https://wa.me/96170417752" class="contact-method" target="_blank">
+            <div class="contact-method-icon whatsapp">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div class="contact-method-text">
+              <span>WhatsApp (Fastest Response)</span>
+              <strong>+961 70 417 752</strong>
+            </div>
+          </a>
+          <a href="tel:+96170417752" class="contact-method">
+            <div class="contact-method-icon phone">📞</div>
+            <div class="contact-method-text">
+              <span>Call Us Directly</span>
+              <strong>+961 70 417 752</strong>
+            </div>
+          </a>
+        </div>
+        <div class="service-area">
+          <h4>📍 Areas We Currently Serve</h4>
+          <div class="area-tags">
+            <span class="area-tag">Tripoli</span>
+            <span class="area-tag">Beirut</span>
+            <span class="area-tag">Jounieh</span>
+            <span class="area-tag">Byblos</span>
+            <span class="area-tag">Zgharta</span>
+            <span class="area-tag">Batroun</span>
+            <span class="area-tag">North Lebanon</span>
+            <span class="area-tag">+ Expanding</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo nav-logo">
+          <span class="logo-text">GMC<span style="text-transform:none">ore</span></span>
+        </div>
+        <p>Lebanon's mobile IT specialists. We bring expert repair, full transparency, and genuine trust directly to your door — because getting help shouldn't be a burden.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Software Fix ($15–$25)</a></li>
+          <li><a href="#services">On-Site Visit ($20–$35)</a></li>
+          <li><a href="#services">Senior Care ($30–$40)</a></li>
+          <li><a href="#services">Hardware Repair</a></li>
+          <li><a href="#services">Network & Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#why">Why GMCore</a></li>
+          <li><a href="#audience">Who We Serve</a></li>
+          <li><a href="#portfolio">Our Work</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#booking">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GMCore. All rights reserved. Based in Lebanon 🇱🇧</p>
+      <p style="color:rgba(255,255,255,0.25)">No-Fix, No-Pay · Full Transparency · Data Privacy First</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/96170417752" class="floating-wa" target="_blank" title="Chat on WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // HAMBURGER
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navlinks').classList.toggle('open');
+  });
+
+  // TABS
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // BOOKING FORM — Formspree + WhatsApp
+  async function submitBooking() {
+    const name     = document.getElementById('fname').value.trim();
+    const phone    = document.getElementById('fphone').value.trim();
+    const service  = document.getElementById('fservice').value;
+    const location = document.getElementById('flocation').value.trim();
+    const date     = document.getElementById('fdate').value;
+    const time     = document.getElementById('ftime').value;
+    const problem  = document.getElementById('fproblem').value.trim();
+
+    if (!name || !phone || !service) {
+      alert('Please fill in your name, phone number, and the service you need.');
+      return;
+    }
+
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    try {
+      await fetch('https://formspree.io/f/maqllyeb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, phone, service, location, date, time, problem,
+          _subject: `📅 New Booking — ${name} — ${date || 'Date TBD'}` })
+      });
+    } catch(e) { /* silently continue even if network fails */ }
+
+    // WhatsApp pre-filled message
+    const msg = encodeURIComponent(
+      `📅 *New GMCore Booking*\n\n` +
+      `👤 Name: ${name}\n` +
+      `📞 Phone: ${phone}\n` +
+      `🔧 Service: ${service}\n` +
+      `📍 Location: ${location || 'Not specified'}\n` +
+      `📆 Date: ${date || 'TBD'}\n` +
+      `⏰ Time: ${time || 'TBD'}\n` +
+      `💬 Problem: ${problem || 'Not specified'}`
+    );
+    window.open(`https://wa.me/96170417752?text=${msg}`, '_blank');
+
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('bookingConfirm').style.display = 'block';
+  }
+
+  // NAV SCROLL SHADOW
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+      window.scrollY > 20 ? '0 4px 20px rgba(15,36,66,0.12)' : '0 2px 12px rgba(15,36,66,0.07)';
+  });
+
+  // SET MIN DATE
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fdate').min = today;
+</script>
+</body>
+</html>
